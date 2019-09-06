@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "90a7def2-331e-4fe0-84f2-d10e8480ed0e",
+		"name": "DesafioBackendEstagioCubos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:4200/createUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\",\n    \"email\": \"test@test.com\",\n    \"gender\": \"m\"\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/createUser",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"createUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4200/addToLine",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": 1\n}"
+				},
+				"url": {
+					"raw": "localhost:4200/addToLine",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"addToLine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4200/findPosition?email=test@test.com",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4200/findPosition?email=test@test.com",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"findPosition"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "test@test.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4200/showLine",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4200/showLine",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"showLine"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4200/filterLine?gender=m",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4200/filterLine?gender=m",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"filterLine"
+					],
+					"query": [
+						{
+							"key": "gender",
+							"value": "m"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4200/popLine",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:4200/popLine",
+					"host": [
+						"localhost"
+					],
+					"port": "4200",
+					"path": [
+						"popLine"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

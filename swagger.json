@@ -1,0 +1,348 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "DesafioBackendEstagioCubos",
+        "version": "1.0.0",
+        "description": "Processo Seletivo: Backend Estágio\n\nAPI para gestionar uma fila de usuários.",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+        }
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/createUser": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/createUserRequestDto"
+                        },
+                        "in": "body",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/createUserResponseDto"
+                        }
+                    },
+                    "422": {
+                        "description": "",
+                        "examples": {
+                            "application/json": {
+                                "error": "Name, email and gender are mandatory parameters."
+                            }
+                        }
+                    },
+                    "409": {
+                        "examples": {
+                            "application/json": "{\n    \"error\": \"A user with the same email already exists.\"\"\n}"
+                        }
+                    },
+                    "500": {
+                        "examples": {
+                            "application/json": {
+                                "error": "Internal server error."
+                            }
+                        }
+                    }
+                },
+                "summary": "Create User",
+                "description": "Cadastra usuário."
+            }
+        },
+        "/addToLine": {
+            "post": {
+                "parameters": [
+                    {
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/addToLineRequestDto"
+                        },
+                        "in": "body",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/addToLineResponseDto"
+                        }
+                    },
+                    "409": {
+                        "examples": {
+                            "application/json": {
+                                "error": "A user with the same id already exists."
+                            }
+                        }
+                    }
+                },
+                "summary": "Add To Line",
+                "description": "Coloca um usuário na última posição da fila."
+            }
+        },
+        "/findPosition": {
+            "get": {
+                "parameters": [
+                    {
+                        "name": "email",
+                        "description": "",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/findPositionResponseDto"
+                        }
+                    }
+                },
+                "summary": "Find Position",
+                "description": "Retorna a posição de um usuário a partir de seu email."
+            }
+        },
+        "/showLine": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/showLineResponseDto"
+                        }
+                    }
+                },
+                "summary": "Show Line",
+                "description": "Lista os usuários da fila e suas respectivas posições."
+            }
+        },
+        "/filterLine": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/filterLineResponseDto"
+                        }
+                    }
+                },
+                "summary": "Filter Line",
+                "description": "Lista os usuários filtrados a partir de um parâmetro."
+            },
+            "parameters": [
+                {
+                    "name": "gender",
+                    "description": "",
+                    "in": "query",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/popLine": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "$ref": "#/definitions/popLineResponseDto"
+                        }
+                    }
+                },
+                "summary": "Pop Line",
+                "description": "Tira a pessoa na primeira posição da fila."
+            }
+        }
+    },
+    "definitions": {
+        "createUserRequestDto": {
+            "title": "Root Type for createUserDto",
+            "description": "{\n    name: string,\n    email: string,\n    gender: string\n}",
+            "required": [
+                "email",
+                "gender",
+                "name"
+            ],
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "name": "teste",
+                "email": "teste@teste.com",
+                "gender": "m"
+            }
+        },
+        "createUserResponseDto": {
+            "title": "Root Type for createUserDto",
+            "description": "{\n    name: string,\n    email: string,\n    gender: string\n}",
+            "required": [
+            ],
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "description": "",
+                    "type": "integer"
+                }
+            },
+            "example": {
+                "id": 1,
+                "name": "test",
+                "email": "test@test.com",
+                "gender": "m"
+            }
+        },
+        "addToLineResponseDto": {
+            "title": "Root Type for addToLineResponseDto",
+            "description": "{\n    linePos: integer\n}",
+            "type": "object",
+            "properties": {
+                "linePos": {
+                    "type": "integer"
+                }
+            },
+            "example": {
+                "linePos": 0
+            }
+        },
+        "findPositionResponseDto": {
+            "title": "Root Type for addToLineResponseDto",
+            "description": "{\n    linePos: integer\n}",
+            "type": "object",
+            "properties": {
+                "linePos": {
+                    "type": "integer"
+                }
+            },
+            "example": {
+                "linePos": 0
+            }
+        },
+        "popLineResponseDto": {
+            "title": "Root Type for popLineResponseDto",
+            "description": "{\n    id: integer,\n    name: string,\n    email: string,\n    gender: string,\n    linePosition: integer\n}",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "id": 1,
+                "name": "test",
+                "email": "test@test.com",
+                "gender": "m"
+            }
+        },
+        "showLineResponseDto": {
+            "title": "Root Type for showLineResponseDto",
+            "description": "[{\n    name: string\n    email: string\n    gender: string\n    linePosition: integer\n}]",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "linePosition": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                }
+            },
+            "example": [
+                {
+                    "name": "test",
+                    "email": "test@test.com",
+                    "gender": "m",
+                    "linePosition": 0
+                }
+            ]
+        },
+        "filterLineResponseDto": {
+            "title": "Root Type for showLineResponseDto",
+            "description": "[{\n    name: string\n    email: string\n    gender: string\n    linePosition: integer\n}]",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "linePosition": {
+                        "format": "int32",
+                        "type": "integer"
+                    }
+                }
+            },
+            "example": [
+                {
+                    "name": "test",
+                    "email": "test@test.com",
+                    "gender": "m",
+                    "linePosition": 0
+                }
+            ]
+        },
+        "addToLineRequestDto": {
+            "title": "Root Type for addToLineRequerDto",
+            "description": "{\n    id: integer\n}",
+            "required": [
+                "id"
+            ],
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "example": {
+                "id": 1
+            }
+        }
+    }
+}
